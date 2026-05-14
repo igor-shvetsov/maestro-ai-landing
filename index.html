@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MaestroAI — Голосовой AI ассистент нового поколения</title>
+
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+
+    <!-- Fancybox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f9fafc;
+            color: #1a2c3e;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        footer .fab {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .image picture {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-screenshot img {
+            min-height: 320px;
+        }
+
+        .image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(145deg, #ffffff 0%, #f0f4fa 100%);
+        }
+
+        .gradient-bg::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(43, 110, 255, 0.04), transparent 70%);
+            animation: slowFloat 20s infinite alternate;
+        }
+
+        @keyframes slowFloat {
+            0% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- ПЛАВАЮЩАЯ ШАПКА ---------- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+            background-color: rgba(249, 250, 252, 0.92);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            margin: 0 -24px;
+            padding-left: 24px;
+            padding-right: 24px;
+            border-radius: 0 0 28px 28px;
+        }
+
+        header.sticky-shadow {
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(43, 110, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 0 0 32px 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1a3c6e, #2b6eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo picture {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .social-links a {
+            color: #4a627a;
+            font-size: 1.6rem;
+            transition: all 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: #2b6eff;
+            transform: translateY(-3px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(95deg, #2b6eff, #9f4dff);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 100, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(95deg, #3f7aff, #b15eff);
+            box-shadow: 0 12px 28px rgba(0, 100, 255, 0.25);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #2b6eff;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #2b6eff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: rgba(43, 110, 255, 0.08);
+            border-color: #5c8eff;
+        }
+
+        /* hero */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0 40px;
+            gap: 20px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(to right, #1f3b62, #2b6eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #3a5470;
+            max-width: 550px;
+            margin-bottom: 30px;
+        }
+
+        .hero-media {
+            flex: 1.4;
+            /*background: rgba(230, 240, 255, 0.7);*/
+            border-radius: 10px;
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .placeholder-media {
+            text-align: center;
+            padding: 40px;
+            color: #2b6eff;
+        }
+
+        .placeholder-media i {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin: 40px 0 40px;
+            font-weight: 700;
+            color: #1e2f44;
+        }
+
+        /* vertical feature blocks */
+        .feature-block {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 48px;
+            margin-bottom: 40px;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 32px 36px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef3fc;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+        }
+
+        .feature-block:hover {
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-desc {
+            flex: 1;
+        }
+
+        .feature-icon-large {
+            font-size: 2.8rem;
+            background: linear-gradient(145deg, #2b6eff, #8a5cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .feature-desc h3 {
+            font-size: 1.9rem;
+            margin-bottom: 16px;
+            color: #0a2647;
+        }
+
+        .feature-desc p {
+            color: #3d5670;
+            line-height: 1.5;
+            font-size: 1.05rem;
+        }
+
+        .feature-screenshot {
+            flex: 1.3;
+            min-width: 260px;
+            background: #f8fafd;
+            border-radius: 32px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .screenshot-placeholder {
+            background: #f0f5ff;
+            border-radius: 24px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            color: #2b6eff;
+        }
+
+        .screenshot-placeholder i {
+            font-size: 3.5rem;
+            opacity: 0.7;
+        }
+
+        .small-note {
+            font-size: 0.75rem;
+            margin-top: 12px;
+            color: #7c8ba0;
+        }
+
+        .feature-block:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        @media (max-width: 900px) {
+            .feature-block, .feature-block:nth-child(even) {
+                flex-direction: column;
+                padding: 28px;
+            }
+
+            .feature-desc h3 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* СЕКЦИЯ ПЕРСОНАЖЕЙ */
+        .characters-section {
+            background: #ffffff;
+            border-radius: 48px;
+            padding: 48px 36px;
+            margin: 60px 0;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef3fc;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .character-card {
+            background: #f8fafd;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e2edf7;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .character-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+            border-color: #c0d6ff;
+        }
+
+        .character-avatar {
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(145deg, #eef3fc, #e2e9f2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 20px 16px 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f5ff;
+        }
+
+        .avatar-placeholder picture {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .voice-type {
+            display: inline-block;
+            background: #e8eff8;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #2b6eff;
+            margin: 8px 0 12px;
+        }
+
+        .character-card .btn-small {
+            background: linear-gradient(95deg, #2b6eff, #9f4dff);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+
+        .character-card .btn-small:hover {
+            background: linear-gradient(95deg, #3f7aff, #b15eff);
+            /*padding: 12px 24px;  !* Уменьшаем padding при наведении *!*/
+            /*margin-top: 10px;   !* Компенсируем смещение *!*/
+            box-shadow: 0 4px 12px rgba(43, 110, 255, 0.3);
+            /*transform: scale(1.02);*/
+            /*background: linear-gradient(95deg, #3f7aff, #b15eff);*/
+            /*backface-visibility: hidden;*/
+            /*-webkit-backface-visibility: hidden;*/
+        }
+
+        /* видео-обзор */
+        .video-reviews {
+            background: #ffffff;
+            border-radius: 48px;
+            padding: 48px 36px;
+            margin: 60px 0 40px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef3fc;
+            scroll-margin-top: 100px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .video-card {
+            background: #f8fafd;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e2edf7;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+            border-color: #c0d6ff;
+        }
+
+        .video-thumbnail {
+            position: relative;
+            background: #0a0a0a;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .video-thumbnail i.fa-youtube {
+            font-size: 4rem;
+            color: #FF0000;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-thumbnail span {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .video-info {
+            padding: 18px 20px 22px;
+        }
+
+        .video-info h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0a2647;
+        }
+
+        .video-info p {
+            font-size: 0.85rem;
+            color: #5b6f8c;
+            line-height: 1.4;
+        }
+
+        .badge-new {
+            background: linear-gradient(95deg, #2b6eff22, #9f4dff22);
+            color: #2b6eff;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: #ffffffea;
+            border-radius: 60px;
+            padding: 50px 20px;
+            margin: 40px 0 70px;
+            border: 1px solid #dfe9f5;
+        }
+
+        /* модалки */
+        .video-modal-overlay, .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2100;
+        }
+
+        .video-modal-overlay.active, .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-modal-container {
+            background: #0f172a;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 1000px;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.25s ease;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-modal-overlay.active .video-modal-container {
+            transform: scale(1);
+        }
+
+        .video-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            background: #1e293b;
+            color: white;
+        }
+
+        .video-modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-video-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-video-modal:hover {
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            max-width: 780px;
+            width: 90%;
+            border-radius: 48px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            transform: scale(0.95);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-logo-col {
+            flex: 1;
+            background: linear-gradient(145deg, #f0f5ff, #e8effa);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .modal-logo-col .big-logo {
+            font-size: 5.5rem;
+            background: linear-gradient(135deg, #2b6eff, #9f4dff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .modal-logo-col .brand-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1a3c6e, #2b6eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .modal-logo-col .tagline {
+            margin-top: 16px;
+            color: #3a5470;
+            font-size: 0.9rem;
+        }
+
+        .modal-info-col {
+            flex: 1;
+            padding: 36px 32px;
+            text-align: center;
+        }
+
+        .modal-info-col h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #0a2647;
+            font-weight: 700;
+        }
+
+        .modal-info-col p {
+            color: #3d5670;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .social-icons-modal {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin: 28px 0 24px;
+            flex-wrap: wrap;
+        }
+
+        .social-icons-modal a {
+            font-size: 2.4rem;
+            transition: transform 0.2s ease;
+        }
+
+        .social-icons-modal a:hover {
+            transform: translateY(-6px);
+        }
+
+        .social-icons-modal .fa-vk {
+            color: #0077FF;
+        }
+
+        .social-icons-modal .fa-telegram-plane {
+            color: #26A5E4;
+        }
+
+        .social-icons-modal .fa-linkedin-in {
+            color: #0A66C2;
+        }
+
+        .social-icons-modal .fa-tiktok {
+            color: #000000;
+            text-shadow: 1px 1px 0 #25F4EE, -1px -1px 0 #FE2C55;
+        }
+
+        .social-icons-modal .fa-youtube {
+            color: #FF0000;
+        }
+
+        .close-modal-btn {
+            background: linear-gradient(95deg, #2b6eff, #9f4dff);
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 680px) {
+            .modal-content {
+                flex-direction: column;
+                max-width: 450px;
+            }
+        }
+
+        /* анимации */
+        .fade-up-item {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.6s ease;
+        }
+
+        .fade-up-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-block .feature-icon-large {
+            transition-delay: 0.05s;
+        }
+
+        .feature-block h3 {
+            transition-delay: 0.1s;
+        }
+
+        .feature-block p {
+            transition-delay: 0.15s;
+        }
+
+        .feature-screenshot {
+            transition-delay: 0.2s;
+        }
+
+        .hero-text h1 {
+            transition-delay: 0s;
+        }
+
+        .hero-text p {
+            transition-delay: 0.1s;
+        }
+
+        .hero-text .btn-primary {
+            transition-delay: 0.2s;
+        }
+
+        .hero-media {
+            transition-delay: 0.15s;
+        }
+
+        .section-title {
+            transition-delay: 0s;
+        }
+
+        .video-card, .character-card {
+            transition-delay: 0.05s;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0 30px;
+            border-top: 1px solid #e2eaf2;
+            color: #5c6f8c;
+        }
+
+        /* Цвета соцсетей для футера */
+        .footer-social-link.fa-vk {
+            color: #0077FF;
+        }
+
+        .footer-social-link.fa-telegram {
+            color: #26A5E4;
+        }
+
+        .footer-social-link.fa-linkedin {
+            color: #0A66C2;
+        }
+
+        .footer-social-link.fa-tiktok {
+            color: #000000;
+            text-shadow: 1px 1px 0 #25F4EE, -1px -1px 0 #FE2C55;
+        }
+
+        .footer-social-link.fa-youtube {
+            color: #FF0000;
+        }
+
+        /* Обновленные стили для ссылок футера */
+        footer .social-link {
+            display: inline-block;
+        / / margin: 0 8 px;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        footer .social-link:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Переопределение базового стиля иконок в футере */
+        footer .fab {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s;
+        }
+
+        footer .fab:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+
+        /* ===== РАСКРАСКА СОЦСЕТЕЙ В ХЕДЕРЕ ===== */
+        .social-links .fa-vk {
+            color: #0077FF;
+        }
+
+        .social-links .fa-telegram-plane {
+            color: #26A5E4;
+        }
+
+        .social-links .fa-linkedin-in {
+            color: #0A66C2;
+        }
+
+        .social-links .fa-tiktok {
+            color: #000000;
+            text-shadow: 1px 1px 0 #25F4EE, -1px -1px 0 #FE2C55;
+        }
+
+        .social-links .fa-youtube {
+            color: #FF0000;
+        }
+
+        .social-links a {
+            transition: transform 0.2s ease, opacity 0.2s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            opacity: 0.85;
+        }
+
+        /* Курсор-указатель для кликабельных изображений */
+        .feature-screenshot .image,
+        .hero-media .image {
+            cursor: pointer;
+            position: relative;
+        }
+
+        /*.feature-screenshot .image::after {*/
+        /*    content: '\f00e';*/
+        /*    font-family: 'Font Awesome 6 Free';*/
+        /*    font-weight: 900;*/
+        /*    position: absolute;*/
+        /*    bottom: 16px;*/
+        /*    right: 16px;*/
+        /*    background: rgba(0, 0, 0, 0.6);*/
+        /*    color: white;*/
+        /*    width: 36px;*/
+        /*    height: 36px;*/
+        /*    border-radius: 50%;*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*    font-size: 1rem;*/
+        /*    opacity: 0;*/
+        /*    transition: opacity 0.2s ease;*/
+        /*    pointer-events: none;*/
+        /*}*/
+
+        .feature-screenshot .image:hover::after,
+        .hero-media .image:hover::after {
+            opacity: 1;
+        }
+
+        /* Полупрозрачный затемненный фон вместо черного */
+        .fancybox__container, .fancybox__toolbar__column button {
+            --fancybox-bg: rgba(0, 0, 0, 0) !important;
+            background: rgba(0, 0, 0, 0.8) !important;
+        }
+
+        .fancybox__backdrop {
+            background: transparent !important;
+        }
+
+        --f-button-bg: rgba(0, 0, 0, 0.8);
+
+
+
+
+
+        /* ===== АДАПТИВНАЯ ШАПКА ===== */
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px !important;
+                gap: 12px !important;
+            }
+
+            .logo {
+                font-size: 1.3rem !important;
+                gap: 8px !important;
+            }
+
+            .logo picture {
+                width: 36px !important;
+                height: 36px !important;
+            }
+
+            .social-links {
+                gap: 12px !important;
+            }
+
+            .social-links a {
+                font-size: 1.2rem !important;
+            }
+
+            .btn-group {
+                gap: 10px !important;
+            }
+
+            .btn-primary, .btn-outline {
+                padding: 8px 16px !important;
+                font-size: 0.85rem !important;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem !important;
+            }
+
+            .hero-text p {
+                font-size: 1rem !important;
+            }
+        }
+
+        @media (max-width: 580px) {
+            header {
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                padding: 12px 16px !important;
+            }
+
+            .logo {
+                justify-content: center !important;
+            }
+
+            .social-links {
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+            }
+
+            .btn-group {
+                justify-content: center !important;
+            }
+
+            .hero-text h1 {
+                font-size: 1.6rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .social-links {
+                gap: 10px !important;
+            }
+
+            .social-links a {
+                font-size: 1.3rem !important;
+            }
+
+            .btn-primary, .btn-outline {
+                padding: 7px 13px !important;
+                /*padding: 6px 12px !important;*/
+                font-size: 0.75rem !important;
+            }
+
+            .logo {
+                font-size: 1.1rem !important;
+            }
+
+            .logo picture {
+                width: 35px !important;
+                height: 35px !important;
+            }
+
+            header {
+                gap: 15px;
+                border-radius: 0 0 10px 10px;
+            }
+
+            header.sticky-shadow {
+                border-radius: 0 0 10px 10px;
+            }
+
+            /** padding: 0 24px; **/
+
+            .container {
+                padding: 0 5px;
+                overflow: hidden;
+            }
+
+            /** padding: 28px; **/
+            .feature-block, .feature-block, .feature-block:nth-child(even) {
+                padding: 10px;
+            }
+
+            /*border-radius: 40px;*/
+
+            .feature-block {
+                border-radius: 15px;
+                /*margin-bottom: 40px;*/
+                margin-bottom: 20px;
+            }
+
+            .feature-screenshot {
+                /*border-radius: 32px;*/
+                border-radius: 15px;
+            }
+
+            .characters-section, .video-reviews {
+                /*margin: 60px 0;*/
+                margin: 20px 0;
+                /*border-radius: 48px;*/
+                border-radius: 15px;
+            }
+
+            .video-reviews {
+                /*padding: 48px 36px;*/
+                padding: 20px 10px;
+            }
+
+            .characters-section {
+                /*padding: 48px 36px;*/
+                padding: 20px 10px;
+            }
+
+            .cta-section {
+                /*margin: 40px 0 70px;*/
+                margin: 20px 0 0;
+                /*border-radius: 60px;*/
+                border-radius: 15px;
+            }
+
+            .cta-section .fas {
+                background: linear-gradient(145deg, #2b6eff, #8a5cff);
+                background-clip: text;
+                -webkit-background-clip: text; /* Без префикса не работает в Safari и старых браузерах */
+                color: transparent; /* Без этого текст перекрывает градиент */
+                display: inline-block; /* Чтобы background-clip работал корректно */
+            }
+
+            .hero {
+                /*flex-direction: row;*/
+                flex-direction: column;
+                /*padding: 40px 0 40px;*/
+                padding-bottom: 0;
+            }
+
+            .hero-text {
+                padding: 0 15px;
+            }
+
+            .characters-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 5px;
+            }
+
+            .characters-grid .create-char-btn {
+                margin: 0 10px;
+                font-size: 0.6rem;
+            }
+
+            .modal-content {
+                /*border-radius: 48px;*/
+                border-radius: 15px;
+            }
+
+            .social-icons-modal {
+                /*gap: 28px;*/
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #socialsBtn {
+                display: none;
+            }
+        }
+
+
+
+        /* ===== ИСПРАВЛЕНИЕ МОДАЛКИ ДЛЯ МОБИЛЬНЫХ (IPHONE) ===== */
+        @media (max-width: 667px) {
+            .modal-content {
+                flex-direction: column !important;
+                max-width: 95% !important;
+                width: 95% !important;
+                border-radius: 24px !important;
+                margin: 0 auto !important;
+                max-height: 90vh !important;
+                overflow-y: auto !important;
+            }
+
+            .modal-logo-col {
+                padding: 20px 16px !important;
+            }
+
+            .modal-logo-col .big-logo {
+                font-size: 3rem !important;
+            }
+
+            .modal-logo-col .brand-name {
+                font-size: 1.5rem !important;
+            }
+
+            .modal-logo-col .tagline {
+                font-size: 0.75rem !important;
+            }
+
+            .modal-info-col {
+                padding: 20px 16px !important;
+            }
+
+            .modal-info-col h3 {
+                font-size: 1.3rem !important;
+                margin-bottom: 12px !important;
+            }
+
+            .modal-info-col p {
+                font-size: 0.85rem !important;
+                margin-bottom: 10px !important;
+            }
+
+            .social-icons-modal {
+                gap: 20px !important;
+                margin: 20px 0 !important;
+            }
+
+            .social-icons-modal a {
+                font-size: 1.8rem !important;
+            }
+
+            .close-modal-btn {
+                padding: 8px 20px !important;
+                font-size: 0.85rem !important;
+                margin-top: 8px !important;
+            }
+        }
+
+        /* Для очень маленьких экранов (iPhone SE 375px) */
+        @media (max-width: 380px) {
+            .modal-content {
+                max-width: 98% !important;
+                width: 96% !important;
+                border-radius: 20px !important;
+                max-height: 85vh !important;
+                height: 85vh !important;
+            }
+
+            .modal-logo-col {
+                padding: 15px 12px !important;
+            }
+
+            .modal-logo-col .big-logo {
+                font-size: 2.5rem !important;
+            }
+
+            .modal-logo-col .brand-name {
+                font-size: 1.3rem !important;
+            }
+
+            .modal-info-col {
+                padding: 15px 12px !important;
+            }
+
+            .modal-info-col h3 {
+                font-size: 1.2rem !important;
+            }
+
+            .social-icons-modal {
+                gap: 15px !important;
+            }
+
+            .social-icons-modal a {
+                font-size: 1.5rem !important;
+            }
+
+            .close-modal-btn {
+                padding: 6px 16px !important;
+                font-size: 0.8rem !important;
+            }
+        }
+
+
+        /* Отключаем sticky только на телефонах в портретной ориентации */
+        @media (max-width: 768px) and (orientation: portrait) {
+            header {
+                position: relative !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+        }
+
+        /* На планшетах и десктопе sticky остается */
+        @media (min-width: 769px) {
+            header {
+                position: sticky;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="gradient-bg"></div>
+<div class="container">
+    <header id="stickyHeader">
+        <div class="logo">
+            <picture>
+                <img src="./images/logo.jpg" alt="MaestroAI Logo">
+            </picture>
+            <span>MaestroAI</span>
+        </div>
+        <div class="social-links">
+            <a href="https://vk.ru/club235183125" target="_blank" aria-label="VKontakte"><i class="fab fa-vk"></i></a>
+            <a href="https://t.me/maestro_ai_platform" target="_blank" aria-label="Telegram"><i
+                    class="fab fa-telegram-plane"></i></a>
+            <a href="https://www.linkedin.com/groups/16094049/" target="_blank" aria-label="LinkedIn"><i
+                    class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.tiktok.com/@igor.shvetsov?_r=1&_t=ZS-96BzJJ9CH7E" target="_blank"
+               aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@MaestroAiPlatform" target="_blank" aria-label="YouTube"><i
+                    class="fab fa-youtube"></i></a>
+        </div>
+        <div class="btn-group">
+            <button class="btn-primary" id="ctaTopBtn">Попробовать</button>
+            <button class="btn-primary" id="videoBtn">Видео обзор</button>
+            <button class="btn-outline" id="socialsBtn">Сообщества</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text fade-up-item">
+            <h1>Голосовой AI ассистент <br>для твоего комфорта</h1>
+            <p>Управляй музыкой, фильмами, документами и браузером — просто говори. MaestroAI превращает твой ПК в
+                интеллектуальную медиаплатформу.</p>
+            <button class="btn-primary" id="heroCta">Начать знакомство <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="hero-media fade-up-item">
+            <div class="image">
+                <a href="./images/img.png" data-fancybox="gallery" data-caption="MaestroAI - главный экран">
+                    <picture>
+                        <img src="./images/img.png" alt="MaestroAI демо">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <h2 class="section-title fade-up-item">Голосовая магия управления</h2>
+
+    <!-- 10 вертикальных секций -->
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-music"></i></div>
+            <h3 class="fade-up-item">Слушай музыку с AI ассистентом</h3>
+            <p class="fade-up-item">AI ассистент поможет с навигацией по трекам, управляя аудиоплеером за тебя.
+                Переключай композиции, регулируй громкость, ставь лайки и ищи новинки голосом.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/listen-music.jpg" data-fancybox="gallery" data-caption="MaestroAI - Слушай музыку с AI ассистентом">
+                    <picture>
+                        <img src="./images/listen-music.jpg" alt="MaestroAI - Слушай музыку с AI ассистентом">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-heart"></i></div>
+            <h3 class="fade-up-item">Формируй любимые песни и альбомы</h3>
+            <p class="fade-up-item">AI ассистент поможет ставить лайки, добавлять треки в избранное и создавать
+                персональные плейлисты без лишних движений.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/music.jpg" data-fancybox="gallery" data-caption="MaestroAI - Формируй любимые песни и альбомы">
+                    <picture>
+                        <img src="./images/music.jpg" alt="MaestroAI - Формируй любимые песни и альбомы">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-film"></i></div>
+            <h3 class="fade-up-item">Запуск фильмов, мультфильмов и сериалов голосом</h3>
+            <p class="fade-up-item">AI ассистент поможет запустить фильмы, мультфильмы, сериалы, просто скажи что нужно.
+                Мгновенный поиск и воспроизведение.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/films.jpg" data-fancybox="gallery" data-caption="MaestroAI - Запуск фильмов, мультфильмов и сериалов голосом">
+                    <picture>
+                        <img src="./images/films.jpg" alt="MaestroAI - Запуск фильмов, мультфильмов и сериалов голосом">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-layer-group"></i></div>
+            <h3 class="fade-up-item">Богатый набор подборок VideoShorts</h3>
+            <p class="fade-up-item">Юмор, познавательное, красота — AI ассистент поможет с навигацией и лайками внутри
+                коротких видео. Никакого лишнего скролла.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/video-shots.jpg" data-fancybox="gallery" data-caption="MaestroAI - Богатый набор подборок VideoShorts">
+                    <picture>
+                        <img src="./images/video-shots.jpg" alt="MaestroAI - Богатый набор подборок VideoShorts">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fab fa-google-drive"></i></div>
+            <h3 class="fade-up-item">Инструмент работы с документами (Google Disk)</h3>
+            <p class="fade-up-item">Встроенный в платформу инструмент работы с документами. AI ассистент поможет быстро
+                открывать все самое необходимое: таблицы, документы, презентации.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/google-disk.jpg" data-fancybox="gallery" data-caption="MaestroAI - Инструмент работы с документами (Google Disk)">
+                    <picture>
+                        <img src="./images/google-disk.jpg" alt="MaestroAI - Инструмент работы с документами (Google Disk)">
+                    </picture>
+                </a>
+            </div>
+<!--            <div class="screenshot-placeholder"><i class="fas fa-folder-open"></i><span>Скриншот: интеграция Google Drive</span><small>(быстрый-->
+<!--                доступ)</small></div>-->
+<!--            <div class="small-note">резерв под изображение</div>-->
+        </div>
+    </div>
+
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-globe"></i></div>
+            <h3 class="fade-up-item">Браузерные ссылки под управлением AI</h3>
+            <p class="fade-up-item">Браузерные ссылки открываются голосовым ассистентом. Просто скажи и нужные тебе
+                соцсети, почта и прочие вещи появятся в браузере. Настрой свой список браузерных заметок.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/browser-links.jpg" data-fancybox="gallery" data-caption="MaestroAI - Браузерные ссылки под управлением AI">
+                    <picture>
+                        <img src="./images/browser-links.jpg" alt="MaestroAI - Браузерные ссылки под управлением AI">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-image"></i></div>
+            <h3 class="fade-up-item">Обои рабочего стола в тематике AI</h3>
+            <p class="fade-up-item">Обои рабочего стола для необходимой атмосферы, встроены и доступны для скачивания.
+                Настрой все для нужной атмосферы.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/wallpapers.jpg" data-fancybox="gallery" data-caption="MaestroAI - Обои рабочего стола в тематике AI">
+                    <picture>
+                        <img src="./images/wallpapers.jpg" alt="MaestroAI демо">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-cloud-sun"></i></div>
+            <h3 class="fade-up-item">Погода и время по запросу</h3>
+            <p class="fade-up-item">Функции запроса времени, погоды через голосового ассистента, достаточно просто
+                спросить «Какая погода?»</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/weather.jpg" data-fancybox="gallery" data-caption="MaestroAI - Погода и время по запросу">
+                    <picture>
+                        <img src="./images/weather.jpg" alt="MaestroAI - Погода и время по запросу">
+                    </picture>
+                </a>
+            </div>
+            <!--            <div class="screenshot-placeholder"><i-->
+            <!--                    class="fas fa-temperature-high"></i><span>Скриншот: виджет погоды</span><small>(голосовой-->
+            <!--                ответ)</small></div>-->
+            <!--            <div class="small-note">резерв под изображение</div>-->
+        </div>
+    </div>
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fas fa-book-open"></i></div>
+            <h3 class="fade-up-item">Электронные книги с озвучкой</h3>
+            <p class="fade-up-item">Запускай электронные книги, голосовой ассистент озвучит книгу и подарит тебе новые
+                интересные ощущения от чтения.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <div class="image">
+                <a href="./images/books.jpg" data-fancybox="gallery" data-caption="MaestroAI - Электронные книги с озвучкой">
+                    <picture>
+                        <img src="./images/books.jpg" alt="MaestroAI - Электронные книги с озвучкой">
+                    </picture>
+                </a>
+            </div>
+            <!--            <div class="screenshot-placeholder">-->
+            <!--                <div class="image">-->
+            <!--                    <picture>-->
+            <!--                        <img src="./images/books.jpg" alt="MaestroAI демо">-->
+            <!--                    </picture>-->
+            <!--                </div>-->
+            <!--&lt;!&ndash;                <i&ndash;&gt;-->
+            <!--&lt;!&ndash;                    class="fas fa-head-side-vr"></i><span>Скриншот: чтение с AI</span><small>(озвучка и плеер)</small>&ndash;&gt;-->
+            <!--            </div>-->
+            <!--            <div class="small-note">резерв под картинку</div>-->
+        </div>
+    </div>
+    <div class="feature-block">
+        <div class="feature-desc">
+            <div class="feature-icon-large fade-up-item"><i class="fa-solid fa-microphone"></i></div>
+            <h3 class="fade-up-item">Набор AI голосов: 3 женских, 2 мужских</h3>
+            <p class="fade-up-item">Создай своего уникального персонажа, задай имя и погружайся в нашу удивительную
+                медийную платформу. Настройки голоса под твое настроение.</p></div>
+        <div class="feature-screenshot fade-up-item">
+            <!--            <div class="screenshot-placeholder"><i class="fas fa-microphone-alt"></i><span>Скриншот: выбор голоса</span><small>(кастомизация-->
+            <!--                персонажа)</small></div>-->
+            <!--            <div class="small-note">резерв под графику</div>-->
+            <div class="image">
+                <a href="./images/persons.jpg" data-fancybox="gallery" data-caption="MaestroAI - Набор AI голосов: 3 женских, 2 мужских">
+                    <picture>
+                        <img src="./images/persons.jpg" alt="MaestroAI - Набор AI голосов: 3 женских, 2 мужских">
+                    </picture>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- СЕКЦИЯ ПЕРСОНАЖЕЙ с picture вместо текста -->
+    <div class="characters-section fade-up-item">
+        <h2 class="section-title" style="margin-top: 0;">Оживи AI-персонажа</h2>
+        <p style="text-align: center; color: #4a627a; max-width: 700px; margin: 0 auto 20px;">Выбери образ, задай имя и
+            подбери тембр голоса. 8 персонажей на любой вкус.</p>
+        <div class="characters-grid" id="charactersGrid"></div>
+    </div>
+
+    <!-- Видео-обзор -->
+    <div class="video-reviews fade-up-item" id="videoSection">
+        <h2 class="section-title" style="margin-top: 0; margin-bottom: 20px;">🎬 Видео-обзор</h2>
+        <p style="text-align: center; color: #4a627a; max-width: 700px; margin: 0 auto 20px;">Самые интересные подборки,
+            обзоры возможностей и уроки использования MaestroAI. Нажми на карточку, чтобы посмотреть видео.</p>
+        <div class="video-grid" id="videoGrid"></div>
+    </div>
+
+    <div class="cta-section fade-up-item">
+        <i class="fas fa-comment-dots" style="font-size: 2.8rem; margin-bottom: 16px; display: inline-block;"></i>
+        <h2>Почувствуй комфорт с нашей платформой</h2>
+        <p style="max-width: 600px; margin: 20px auto;">Открой соцсети, почту или заметки в браузере одной фразой. AI
+            запомнит твой список браузерных ссылок и заметок!</p>
+        <button class="btn-primary" id="bottomCta">Перейти в сообщества</button>
+        <div style="margin-top: 20px;"><small>Доступно на Windows + Linux — скачивай MaestroAI</small></div>
+    </div>
+
+    <footer>
+        <p style="margin-bottom: 5px;">© 2025-2026 MaestroAI — твой голосовой проводник в цифровой реальности.</p>
+        <p>Присоединяйся к нам в соцсетях: VK,
+            Telegram, LinkedIn, TikTok, YouTube</p>
+        <div style="margin-top: 15px;">
+            <a href="https://vk.ru/club235183125" class="social-link" data-platform="VK"><i
+                    class="fab fa-vk footer-social-link"></i></a> 
+            <a href="https://t.me/maestro_ai_platform" class="social-link" data-platform="Telegram"><i
+                    class="fab fa-telegram footer-social-link"></i></a> 
+            <a href="https://www.linkedin.com/groups/16094049/" class="social-link" data-platform="LinkedIn"><i
+                    class="fab fa-linkedin footer-social-link"></i></a> 
+            <a href="https://www.tiktok.com/@igor.shvetsov?_r=1&_t=ZS-96BzJJ9CH7E" class="social-link"
+               data-platform="TikTok"><i class="fab fa-tiktok footer-social-link"></i></a> 
+            <a href="https://www.youtube.com/@MaestroAiPlatform" class="social-link" data-platform="YouTube"><i
+                    class="fab fa-youtube footer-social-link"></i></a>
+        </div>
+    </footer>
+</div>
+
+<!-- Модалка соцсетей -->
+<div id="socialModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-logo-col">
+            <div class="big-logo"><i class="fas fa-microphone-alt"></i></div>
+            <div class="brand-name">MaestroAI</div>
+            <div class="tagline">голосовой ассистент нового поколения</div>
+        </div>
+        <div class="modal-info-col">
+            <h3>MaestroAI ждёт тебя!</h3>
+            <p>Скачать MaestroAI можно в наших соцсетях и Telegram-канале!</p>
+            <p><strong>Подписывайтесь:</strong> VK, Telegram, LinkedIn, TikTok, YouTube</p>
+            <div class="social-icons-modal">
+                <a href="https://vk.ru/club235183125" class="modal-social-link" data-platform="VK"><i
+                        class="fab fa-vk"></i></a>
+                <a href="https://t.me/maestro_ai_platform" class="modal-social-link" data-platform="Telegram"><i
+                        class="fab fa-telegram-plane"></i></a>
+                <a href="https://www.linkedin.com/groups/16094049/" class="modal-social-link"
+                   data-platform="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.tiktok.com/@igor.shvetsov?_r=1&_t=ZS-96BzJJ9CH7E" class="modal-social-link"
+                   data-platform="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.youtube.com/@MaestroAiPlatform" class="modal-social-link"
+                   data-platform="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <button class="close-modal-btn" id="closeModalBtn">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка видео -->
+<div id="videoModal" class="video-modal-overlay">
+    <div class="video-modal-container">
+        <div class="video-modal-header"><h3 id="modalVideoTitle">MaestroAI: видео</h3>
+            <button class="close-video-modal" id="closeVideoModalBtn">&times;</button>
+        </div>
+        <div class="video-wrapper">
+            <iframe id="youtubeIframe" src="" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // Инициализация Fancybox для всех изображений
+    Fancybox.bind('[data-fancybox]', {
+        // Основные настройки
+        closeButton: false,
+        arrows: true,
+        loop: true,
+        keyboard: true,
+        dragToClose: true,
+
+        // Настройки отображения
+        Toolbar: {
+            display: {
+                left: [],
+                right: ['close']
+            }
+        },
+
+        // Кнопки управления
+        Carousel: {
+            infinite: true
+        },
+
+        // Подписи
+        caption: function(fancybox, slide) {
+            return slide.caption || slide.$trigger?.getAttribute('data-caption') || '';
+        }
+    });
+
+    // тень шапки
+    const header = document.getElementById('stickyHeader');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('sticky-shadow', window.scrollY > 20);
+    });
+
+    // плавный скролл к секции видео
+    const videoBtn = document.getElementById('videoBtn');
+    const videoSection = document.getElementById('videoSection');
+    if (videoBtn && videoSection) {
+        videoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            videoSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+        });
+    }
+
+    // обсервер анимаций
+    const animatedItems = document.querySelectorAll('.fade-up-item');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {threshold: 0.2, rootMargin: "0px 0px 500px 0px"});
+    animatedItems.forEach(item => observer.observe(item));
+
+    // ---- ГЕНЕРАЦИЯ 8 ПЕРСОНАЖЕЙ (4 женских + 4 мужских) с picture вместо текста ----
+    const charactersData = [
+        {gender: "female", voice: "Нежный", color: "#ff9eb5"},
+        {gender: "female", voice: "Энергичный", color: "#ffb77c"},
+        {gender: "female", voice: "Мягкий", color: "#b8a9ff"},
+        {gender: "female", voice: "Вдохновляющий", color: "#7dd3fc"},
+        {gender: "male", voice: "Уверенный", color: "#6b8cff"},
+        {gender: "male", voice: "Дружелюбный", color: "#5ee0a0"},
+        {gender: "male", voice: "Спокойный", color: "#9ca3af"},
+        {gender: "male", voice: "Харизматичный", color: "#f472b6"}
+    ];
+
+    const charactersGrid = document.getElementById('charactersGrid');
+    if (charactersGrid) {
+        charactersData.forEach((char, idx) => {
+            const card = document.createElement('div');
+            card.className = 'character-card fade-up-item';
+            card.style.transitionDelay = `${idx * 0.03}s`;
+
+            const index = idx + 1;
+            const subFolder = char.gender === 'female' ? 'female' : 'male';
+            const avatarSrc = `./images/ai-agents/${subFolder}/${index}.jpg`;
+
+            card.innerHTML = `
+                <div class="character-avatar">
+                    <div class="avatar-placeholder">
+                        <picture>
+                            <img src="${avatarSrc}" alt="AI персонаж">
+                        </picture>
+                    </div>
+                </div>
+                <button class="btn-small create-char-btn" data-gender="${char.gender}" data-voice="${char.voice}">Выбрать персонажа</button>
+            `;
+            charactersGrid.appendChild(card);
+            observer.observe(card);
+        });
+
+        // document.querySelectorAll('.create-char-btn').forEach(btn => {
+        //     btn.addEventListener('click', (e) => {
+        //         e.stopPropagation();
+        //         const gender = btn.getAttribute('data-gender');
+        //         const voiceType = btn.getAttribute('data-voice');
+        //         const name = prompt(`Создай своего AI-персонажа!\nВыбран ${gender === 'female' ? 'женский' : 'мужской'} голос (${voiceType}).\nПридумай имя для персонажа:`, 'Мой ассистент');
+        //         if (name && name.trim()) {
+        //             alert(`✨ Поздравляем! Персонаж "${name.trim()}" с ${voiceType} голосом создан! Теперь он ждёт тебя в MaestroAI.`);
+        //         } else if (name === "") {
+        //             alert('Имя не может быть пустым. Попробуй ещё раз.');
+        //         }
+        //     });
+        // });
+    }
+
+    // ---- ВИДЕО ДАННЫЕ И ГЕНЕРАЦИЯ ----
+    const videoData = [
+        {
+            title: "MaestroAI: Обзор возможностей",
+            desc: "Знакомство с голосовым ассистентом, настройка и первые команды.",
+            badge: "Новинка",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "Управление музыкой и плейлистами",
+            desc: "Как включать треки, ставить лайки и создавать подборки голосом.",
+            badge: "Популярное",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "Запуск фильмов и сериалов",
+            desc: "Скажите название — AI откроет кино или сериал за секунды.",
+            badge: "",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "Работа с документами и Google Disk",
+            desc: "Открывайте таблицы и тексты без лишних кликов.",
+            badge: "",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "Видеошорты и рекомендации",
+            desc: "Смотрите короткие видео и ставьте лайки голосом.",
+            badge: "🔥 Тренд",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "Настройка браузерных ссылок",
+            desc: "Быстрый доступ к соцсетям, почте и сайтам одной фразой.",
+            badge: "",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "AI-обои и персонализация",
+            desc: "Создайте атмосферу рабочего стола с помощью голоса.",
+            badge: "",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        {
+            title: "Озвучка электронных книг",
+            desc: "Слушайте любимые книги в исполнении AI.",
+            badge: "Новинка",
+            youtubeId: "dQw4w9WgXcQ"
+        },
+        // {
+        //     title: "Как создать своего AI-персонажа",
+        //     desc: "Выберите голос, дайте имя и настройте ассистента под себя.",
+        //     badge: "",
+        //     youtubeId: "dQw4w9WgXcQ"
+        // },
+        // {
+        //     title: "Секретные команды MaestroAI",
+        //     desc: "Неочевидные, но очень полезные голосовые трюки.",
+        //     badge: "Совет",
+        //     youtubeId: "dQw4w9WgXcQ"
+        // }
+    ];
+
+    const videoGrid = document.getElementById('videoGrid');
+    const videoModal = document.getElementById('videoModal');
+    const youtubeIframe = document.getElementById('youtubeIframe');
+    const modalVideoTitle = document.getElementById('modalVideoTitle');
+    const closeVideoBtn = document.getElementById('closeVideoModalBtn');
+
+    function openVideoModal(title, youtubeId) {
+        modalVideoTitle.innerText = title;
+        youtubeIframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+        videoModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+        videoModal.classList.remove('active');
+        youtubeIframe.src = "";
+        document.body.style.overflow = '';
+    }
+
+    closeVideoBtn.addEventListener('click', closeVideoModal);
+    videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) closeVideoModal();
+    });
+
+    if (videoGrid) {
+        videoData.forEach((video, idx) => {
+            const card = document.createElement('div');
+            card.className = 'video-card fade-up-item';
+            card.style.transitionDelay = `${idx * 0.03}s`;
+            card.innerHTML = `<div class="video-thumbnail"><i class="fab fa-youtube"></i><span>Смотреть видео</span></div><div class="video-info"><h4>${video.title}</h4><p>${video.desc}</p>${video.badge ? `<div class="badge-new">${video.badge}</div>` : ''}</div>`;
+            card.addEventListener('click', () => openVideoModal(video.title, video.youtubeId));
+            videoGrid.appendChild(card);
+            observer.observe(card);
+        });
+    }
+
+    // if (videoGrid) {
+    //     videoData.forEach((video, idx) => {
+    //         const card = document.createElement('div');
+    //         card.className = 'video-card fade-up-item';
+    //         card.style.transitionDelay = `${idx * 0.03}s`;
+    //         card.innerHTML = `<div class="video-thumbnail"><i class="fab fa-youtube"></i><span>Смотреть видео</span></div><div class="video-info"><h4>${video.title}</h4><p>${video.desc}</p>${video.badge ? `<div class="badge-new">${video.badge}</div>` : ''}</div>`;
+    //         card.addEventListener('click', () => openVideoModal(video.title, video.youtubeId));
+    //         videoGrid.appendChild(card);
+    //         observer.observe(card);
+    //     });
+    //     // Принудительно показываем видео-карточки сразу
+    //     setTimeout(() => {
+    //         document.querySelectorAll('#videoGrid .video-card').forEach(card => {
+    //             card.classList.add('visible');
+    //         });
+    //     }, 50);
+    // }
+
+    // модалка соцсетей
+    const socialModal = document.getElementById('socialModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function openSocialModal() {
+        socialModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSocialModal() {
+        socialModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeSocialModal);
+    socialModal.addEventListener('click', (e) => {
+        if (e.target === socialModal) closeSocialModal();
+    });
+
+    const createCharBtn = document.querySelectorAll('.create-char-btn');
+
+
+    const ctaTop = document.getElementById('ctaTopBtn');
+    const socialsBtn = document.getElementById('socialsBtn');
+    const heroCta = document.getElementById('heroCta');
+    const bottomCta = document.getElementById('bottomCta');
+    [ctaTop, socialsBtn, heroCta, bottomCta, ...createCharBtn].forEach(btn => {
+        if (btn) btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSocialModal();
+        });
+    });
+
+    // document.querySelectorAll('.modal-social-link').forEach(link => {
+    //     link.addEventListener('click', (e) => {
+    //         e.preventDefault();
+    //         alert(`Переход в ${link.getAttribute('data-platform')} сообщество MaestroAI. Добавьте реальную ссылку.`);
+    //     });
+    // });
+
+    window.addEventListener('load', () => {
+        document.querySelectorAll('.fade-up-item').forEach(item => {
+            if (item.getBoundingClientRect().top < window.innerHeight - 80) item.classList.add('visible');
+        });
+    });
+</script>
+</body>
+</html>
