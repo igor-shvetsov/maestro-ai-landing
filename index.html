@@ -1865,7 +1865,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             let styles = '';
 
             if (video.background) {
-                styles = `background: url(${video.background})`;
+                styles = `background-image: url(${video.background})`;
             }
 
             card.innerHTML = `<div class="video-thumbnail" style="${styles}"><i class="fab fa-youtube"></i><span>Смотреть видео</span></div><div class="video-info"><h4>${video.title}</h4><p>${video.desc}</p>${video.badge ? `<div class="badge-new">${video.badge}</div>` : ''}</div>`;
