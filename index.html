@@ -1686,35 +1686,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       lazyImages.forEach(function(img) {
         observer.observe(img);
       });
-    });
 
+      // Инициализация Fancybox для всех изображений
+        Fancybox.bind('[data-fancybox]', {
+            // Основные настройки
+            closeButton: false,
+            arrows: true,
+            loop: true,
+            keyboard: true,
+            dragToClose: true,
 
-    // Инициализация Fancybox для всех изображений
-    Fancybox.bind('[data-fancybox]', {
-        // Основные настройки
-        closeButton: false,
-        arrows: true,
-        loop: true,
-        keyboard: true,
-        dragToClose: true,
+            // Настройки отображения
+            Toolbar: {
+                display: {
+                    left: [],
+                    right: ['close']
+                }
+            },
 
-        // Настройки отображения
-        Toolbar: {
-            display: {
-                left: [],
-                right: ['close']
+            // Кнопки управления
+            Carousel: {
+                infinite: true
+            },
+
+            // Подписи
+            caption: function(fancybox, slide) {
+                return slide.caption || slide.$trigger?.getAttribute('data-caption') || '';
             }
-        },
-
-        // Кнопки управления
-        Carousel: {
-            infinite: true
-        },
-
-        // Подписи
-        caption: function(fancybox, slide) {
-            return slide.caption || slide.$trigger?.getAttribute('data-caption') || '';
-        }
+        });
     });
 
     // тень шапки
