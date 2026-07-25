@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>MaestroAI — соцсеть, медиа и голосовой AI ассистент нового поколения</title>
 
-    <meta name="description" content="Соцсеть и голосовой помощник MaestroAI с ИИ. Управляйте музыкой, фильмами, video shorts. Узнайте больше!">
-    <meta name="keywords" content="голосовой ассистент, яндекс станция, алиса, искусственный интеллект, умная колонка, музыка, фильмы, соцсеть, голосовой помощник, ии">
+    <meta name="description"
+          content="Соцсеть и голосовой помощник MaestroAI с ИИ. Управляйте музыкой, фильмами, video shorts. Узнайте больше!">
+    <meta name="keywords"
+          content="голосовой ассистент, яндекс станция, алиса, искусственный интеллект, умная колонка, музыка, фильмы, соцсеть, голосовой помощник, ии">
     <meta name="author" content="MaestroAI">
     <meta name="copyright" content="MaestroAI">
 
     <!-- Open Graph для соцсетей (ВК, Facebook, Telegram) -->
-    <meta property="og:title" content="Соцсеть и голосовой ассистент MaestroAI — управляйте музыкой, фильмами, video shorts. Узнайте больше!">
-    <meta property="og:description" content="Управляйте музыкой, фильмами, video shorts голосом. Голосовой ассистент для максимального комфорта.">
+    <meta property="og:title"
+          content="Соцсеть и голосовой ассистент MaestroAI — управляйте музыкой, фильмами, video shorts. Узнайте больше!">
+    <meta property="og:description"
+          content="Управляйте музыкой, фильмами, video shorts голосом. Голосовой ассистент для максимального комфорта.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="http://lp.maestro-ai-app.ru/">
     <meta property="og:image" content="http://lp.maestro-ai-app.ru/images/listen-music.jpg">
@@ -334,7 +338,7 @@
             flex: 1.3;
             min-width: 260px;
             background: #f8fafd;
-            // border-radius: 32px;
+        / / border-radius: 32 px;
             border-radius: 10px;
             text-align: center;
             overflow: hidden;
@@ -374,7 +378,7 @@
             }
 
             .feature-desc h3 {
-                // font-size: 1.6rem;
+            / / font-size: 1.6 rem;
                 font-size: 1.4rem;
             }
         }
@@ -497,7 +501,7 @@
 
         .video-grid {
             display: grid;
-            // grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        / / grid-template-columns: repeat(auto-fill, minmax(280 px, 1 fr));
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 10px;
             margin-top: 40px;
@@ -532,7 +536,7 @@
 
         .video-thumbnail i.fa-youtube {
             font-size: 4rem;
-            // color: #FF0000;
+        / / color: #FF0000;
             color: #7d3be7;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
@@ -987,10 +991,19 @@
             background: transparent !important;
         }
 
-        --f-button-bg: rgba(0, 0, 0, 0.8);
+        --f-button-bg:
+        rgba
 
-
-
+        (
+        0
+        ,
+        0
+        ,
+        0
+        ,
+        0.8
+        )
+        ;
 
 
         /* ===== АДАПТИВНАЯ ШАПКА ===== */
@@ -1106,7 +1119,6 @@
             }
 
             /** padding: 0 24px; **/
-
             .container {
                 padding: 0 5px;
                 overflow: hidden;
@@ -1118,7 +1130,6 @@
             }
 
             /*border-radius: 40px;*/
-
             .feature-block {
                 border-radius: 15px;
                 /*margin-bottom: 40px;*/
@@ -1200,7 +1211,6 @@
                 display: none;
             }
         }
-
 
 
         /* ===== ИСПРАВЛЕНИЕ МОДАЛКИ ДЛЯ МОБИЛЬНЫХ (IPHONE) ===== */
@@ -1322,35 +1332,163 @@
                 position: sticky;
             }
         }
+
+        /* ===== БЛОК СОЦСЕТЬ ===== */
+        .social-network-section {
+            padding: 20px 0 10px;
+            margin-bottom: 10px;
+        }
+
+        .social-network-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .social-network-subtitle {
+            color: #4a627a;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .social-network-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .social-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #eef3fc;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .social-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.12);
+            border-color: #c0d6ff;
+        }
+
+        .social-image {
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: #f0f5ff;
+            cursor: pointer;
+        }
+
+        .social-image picture {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .social-card:hover .social-image img {
+            transform: scale(1.04);
+        }
+
+        .social-card-label {
+            padding: 14px 16px 16px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #0a2647;
+            text-align: center;
+            background: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 1024px) {
+            .social-network-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .social-network-section {
+                padding: 10px 0 5px;
+            }
+
+            .social-network-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .social-card-label {
+                font-size: 0.75rem;
+                padding: 10px 8px 12px;
+            }
+
+            .social-network-subtitle {
+                font-size: 0.9rem;
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .social-network-grid {
+                gap: 8px;
+            }
+
+            .social-card-label {
+                font-size: 0.65rem;
+                padding: 8px 6px 10px;
+            }
+        }
     </style>
 
     <script defer src="/assets/scripts/index.js"></script>
 
     <!-- Fancybox CSS -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Font Awesome 6 -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <!-- Fancybox JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-TK5HLJ49');</script>
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TK5HLJ49');</script>
     <!-- End Google Tag Manager -->
-    </head>
+</head>
 <body>
 <div id="lcp" style="width: 5000px; position: relative;">
-    <img src="https://st.softgamings.com/themes/softgamings/images/svg/lcp.svg" fetchpriority="high" alt="lpc image" style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; z-index: 99999999; pointer-events: none; width: 100%; height: auto; border: 1px solid red; opacity: 0.001 !important;">
+    <img src="https://st.softgamings.com/themes/softgamings/images/svg/lcp.svg" fetchpriority="high" alt="lpc image"
+         style="position: absolute; top: 0; right: 0; left: 0; bottom: 0; z-index: 99999999; pointer-events: none; width: 100%; height: auto; border: 1px solid red; opacity: 0.001 !important;">
 </div>
 
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK5HLJ49"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TK5HLJ49"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <div class="gradient-bg"></div>
@@ -1398,6 +1536,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </section>
 
+    <!-- БЛОК СОЦСЕТЬ -->
+    <section class="social-network-section fade-up-item">
+        <div class="social-network-header">
+            <h2 class="section-title" style="margin-bottom: 8px;">Соцсеть нового поколения</h2>
+            <p class="social-network-subtitle">Общайся, делись контентом и будь в центре событий вместе с MaestroAI</p>
+        </div>
+        <div class="social-network-grid">
+            <div class="social-card">
+                <div class="social-image">
+                    <a href="./images/social-1.jpg" data-fancybox="gallery" data-caption="MaestroAI - Лента новостей">
+                        <picture>
+                            <img data-src="./images/social-1.jpg" alt="MaestroAI - Лента новостей" loading="lazy">
+                        </picture>
+                    </a>
+                </div>
+                <div class="social-card-label">Лента новостей</div>
+            </div>
+            <div class="social-card">
+                <div class="social-image">
+                    <a href="./images/social-2.jpg" data-fancybox="gallery"
+                       data-caption="MaestroAI - Общение с друзьями">
+                        <picture>
+                            <img data-src="./images/social-2.jpg" alt="MaestroAI - Общение с друзьями" loading="lazy">
+                        </picture>
+                    </a>
+                </div>
+                <div class="social-card-label">Общение с друзьями</div>
+            </div>
+            <div class="social-card">
+                <div class="social-image">
+                    <a href="./images/social-3.jpg" data-fancybox="gallery"
+                       data-caption="MaestroAI - Группы и сообщества">
+                        <picture>
+                            <img data-src="./images/social-3.jpg" alt="MaestroAI - Группы и сообщества" loading="lazy">
+                        </picture>
+                    </a>
+                </div>
+                <div class="social-card-label">Группы и сообщества</div>
+            </div>
+            <div class="social-card">
+                <div class="social-image">
+                    <a href="./images/social-4.jpg" data-fancybox="gallery" data-caption="MaestroAI - Медиа и контент">
+                        <picture>
+                            <img data-src="./images/social-4.jpg" alt="MaestroAI - Медиа и контент" loading="lazy">
+                        </picture>
+                    </a>
+                </div>
+                <div class="social-card-label">Медиа и контент</div>
+            </div>
+        </div>
+    </section>
+
     <h2 class="section-title fade-up-item">Голосовая магия управления</h2>
 
     <!-- 10 вертикальных секций -->
@@ -1409,7 +1599,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 Переключай композиции, регулируй громкость, ставь лайки и ищи новинки голосом.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/listen-music.jpg" data-fancybox="gallery" data-caption="MaestroAI - Слушай музыку с AI ассистентом">
+                <a href="./images/listen-music.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Слушай музыку с AI ассистентом">
                     <picture>
                         <img src="./images/listen-music.jpg" alt="MaestroAI - Слушай музыку с AI ассистентом">
                     </picture>
@@ -1426,7 +1617,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 персональные плейлисты без лишних движений.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/music.jpg" data-fancybox="gallery" data-caption="MaestroAI - Формируй любимые песни и альбомы">
+                <a href="./images/music.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Формируй любимые песни и альбомы">
                     <picture>
                         <img data-src="./images/music.jpg" alt="MaestroAI - Формируй любимые песни и альбомы">
                     </picture>
@@ -1442,9 +1634,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 Мгновенный поиск и воспроизведение.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/films.jpg" data-fancybox="gallery" data-caption="MaestroAI - Запуск фильмов, мультфильмов и сериалов голосом">
+                <a href="./images/films.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Запуск фильмов, мультфильмов и сериалов голосом">
                     <picture>
-                        <img data-src="./images/films.jpg" alt="MaestroAI - Запуск фильмов, мультфильмов и сериалов голосом">
+                        <img data-src="./images/films.jpg"
+                             alt="MaestroAI - Запуск фильмов, мультфильмов и сериалов голосом">
                     </picture>
                 </a>
             </div>
@@ -1458,7 +1652,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 коротких видео. Никакого лишнего скролла.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/video-shots.jpg" data-fancybox="gallery" data-caption="MaestroAI - Богатый набор подборок VideoShorts">
+                <a href="./images/video-shots.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Богатый набор подборок VideoShorts">
                     <picture>
                         <img data-src="./images/video-shots.jpg" alt="MaestroAI - Богатый набор подборок VideoShorts">
                     </picture>
@@ -1475,15 +1670,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 открывать все самое необходимое: таблицы, документы, презентации.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/google-disk.jpg" data-fancybox="gallery" data-caption="MaestroAI - Инструмент работы с документами (Google Disk)">
+                <a href="./images/google-disk.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Инструмент работы с документами (Google Disk)">
                     <picture>
-                        <img data-src="./images/google-disk.jpg" alt="MaestroAI - Инструмент работы с документами (Google Disk)">
+                        <img data-src="./images/google-disk.jpg"
+                             alt="MaestroAI - Инструмент работы с документами (Google Disk)">
                     </picture>
                 </a>
             </div>
-<!--            <div class="screenshot-placeholder"><i class="fas fa-folder-open"></i><span>Скриншот: интеграция Google Drive</span><small>(быстрый-->
-<!--                доступ)</small></div>-->
-<!--            <div class="small-note">резерв под изображение</div>-->
+            <!--            <div class="screenshot-placeholder"><i class="fas fa-folder-open"></i><span>Скриншот: интеграция Google Drive</span><small>(быстрый-->
+            <!--                доступ)</small></div>-->
+            <!--            <div class="small-note">резерв под изображение</div>-->
         </div>
     </div>
 
@@ -1495,9 +1692,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 соцсети, почта и прочие вещи появятся в браузере. Настрой свой список браузерных заметок.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/browser-links.jpg" data-fancybox="gallery" data-caption="MaestroAI - Браузерные ссылки под управлением AI">
+                <a href="./images/browser-links.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Браузерные ссылки под управлением AI">
                     <picture>
-                        <img data-src="./images/browser-links.jpg" alt="MaestroAI - Браузерные ссылки под управлением AI">
+                        <img data-src="./images/browser-links.jpg"
+                             alt="MaestroAI - Браузерные ссылки под управлением AI">
                     </picture>
                 </a>
             </div>
@@ -1512,7 +1711,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 Настрой все для нужной атмосферы.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/wallpapers.jpg" data-fancybox="gallery" data-caption="MaestroAI - Обои рабочего стола в тематике AI">
+                <a href="./images/wallpapers.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Обои рабочего стола в тематике AI">
                     <picture>
                         <img data-src="./images/wallpapers.jpg" alt="MaestroAI демо">
                     </picture>
@@ -1529,7 +1729,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 спросить «Какая погода?»</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/weather.jpg" data-fancybox="gallery" data-caption="MaestroAI - Погода и время по запросу">
+                <a href="./images/weather.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Погода и время по запросу">
                     <picture>
                         <img data-src="./images/weather.jpg" alt="MaestroAI - Погода и время по запросу">
                     </picture>
@@ -1549,7 +1750,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 интересные ощущения от чтения.</p></div>
         <div class="feature-screenshot fade-up-item">
             <div class="image">
-                <a href="./images/books.jpg" data-fancybox="gallery" data-caption="MaestroAI - Электронные книги с озвучкой">
+                <a href="./images/books.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Электронные книги с озвучкой">
                     <picture>
                         <img data-src="./images/books.jpg" alt="MaestroAI - Электронные книги с озвучкой">
                     </picture>
@@ -1578,7 +1780,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!--                персонажа)</small></div>-->
             <!--            <div class="small-note">резерв под графику</div>-->
             <div class="image">
-                <a href="./images/persons.jpg" data-fancybox="gallery" data-caption="MaestroAI - Набор AI голосов: 3 женских, 2 мужских">
+                <a href="./images/persons.jpg" data-fancybox="gallery"
+                   data-caption="MaestroAI - Набор AI голосов: 3 женских, 2 мужских">
                     <picture>
                         <img data-src="./images/persons.jpg" alt="MaestroAI - Набор AI голосов: 3 женских, 2 мужских">
                     </picture>
