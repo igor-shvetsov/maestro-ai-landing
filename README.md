@@ -1,1 +1,1 @@
-# maestro-ai-for-landing
+# Maestro AI App
