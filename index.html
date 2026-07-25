@@ -1758,10 +1758,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // ---- ВИДЕО ДАННЫЕ И ГЕНЕРАЦИЯ ----
     const videoData = [
         {
-            title: "MaestroAI: Обзор возможностей",
+            title: "Video Shorts / Игры - часть 1",
             desc: "Знакомство с голосовым ассистентом, настройка и первые команды.",
             badge: "Новинка",
-            youtubeId: "dQw4w9WgXcQ"
+            youtubeId: "dQw4w9WgXcQ",
+            vk: {
+                url: "https://vkvideo.ru/video_ext.php?oid=-235183125&id=456239040&hash=7ee29d83de4c0116&hd=3",
+            },
         },
         {
             title: "Управление музыкой и плейлистами",
@@ -1825,9 +1828,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const modalVideoTitle = document.getElementById('modalVideoTitle');
     const closeVideoBtn = document.getElementById('closeVideoModalBtn');
 
-    function openVideoModal(title, youtubeId) {
-        modalVideoTitle.innerText = title;
-        youtubeIframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+    function openVideoModal(video) {
+        modalVideoTitle.innerText = video.title;
+
+        if (video.vk) {
+            youtubeIframe.src = video.vk.url;
+        } else {
+            youtubeIframe.src = `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+        }
+
         videoModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -1849,7 +1858,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             card.className = 'video-card fade-up-item';
             card.style.transitionDelay = `${idx * 0.03}s`;
             card.innerHTML = `<div class="video-thumbnail"><i class="fab fa-youtube"></i><span>Смотреть видео</span></div><div class="video-info"><h4>${video.title}</h4><p>${video.desc}</p>${video.badge ? `<div class="badge-new">${video.badge}</div>` : ''}</div>`;
-            card.addEventListener('click', () => openVideoModal(video.title, video.youtubeId));
+            card.addEventListener('click', () => openVideoModal(video));
             videoGrid.appendChild(card);
             observer.observe(card);
         });
