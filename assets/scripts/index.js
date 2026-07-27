@@ -157,10 +157,14 @@ const videoData = [
         background: '/images/videos/1-mini.jpg',
     },
     {
-        title: "Управление музыкой и плейлистами",
-        desc: "Как включать треки, ставить лайки и создавать подборки голосом.",
+        title: "Управление мониторами",
+        desc: "Как включить или выключить мониторы",
         badge: "Популярное",
-        youtubeId: "dQw4w9WgXcQ"
+        youtubeId: "dQw4w9WgXcQ",
+        vk: {
+            url: "https://vkvideo.ru/video_ext.php?oid=-235183125&id=456239029&hash=47674539034a071b&hd=3",
+        },
+        background: '/images/videos/2-mini.jpg',
     },
     {
         title: "Запуск фильмов и сериалов",
