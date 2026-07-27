@@ -167,10 +167,14 @@ const videoData = [
         background: '/images/videos/2-mini.jpg',
     },
     {
-        title: "Запуск фильмов и сериалов",
-        desc: "Скажите название — AI откроет кино или сериал за секунды.",
-        badge: "",
-        youtubeId: "dQw4w9WgXcQ"
+        title: "Установка на Linux",
+        desc: "Как установить на примере Linux Mint",
+        badge: "Популярное",
+        youtubeId: "dQw4w9WgXcQ",
+        vk: {
+            url: "https://vkvideo.ru/video_ext.php?oid=-235183125&id=456239034&hash=94e4c83748937352&hd=4",
+        },
+        background: '/images/videos/3-mini.jpg',
     },
     {
         title: "Работа с документами и Google Disk",
