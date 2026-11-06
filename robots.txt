@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /search
+
+Disallow: /*?utm_
+Disallow: /*?from=
+Disallow: /*?ref=
+Disallow: /*?sessionid=
+Disallow: /*?gclid=
+Disallow: /*?yclid=
+Disallow: /*?fbclid=
+
+Disallow: /*?sort=
+Disallow: /*?filter=
+
+Sitemap: https://lp.maestro-ai-app.ru/sitemap.xml
+
+Host: https://lp.maestro-ai-app.ru
